@@ -1,6 +1,7 @@
 from django.db import models
 
 
+# this is the model for the database table, hence it is different
 class Form(models.Model):
     first_name = models.CharField(max_length=80)
     last_name = models.CharField(max_length=80)
