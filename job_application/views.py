@@ -1,6 +1,8 @@
 from django.shortcuts import render
 # need to add . since forms is local file, so to be able to import local we add ".", otherwise django looks in directory
 from .forms import ApplicationForm
+from .models import Form
+from django.contrib import messages
 
 
 # here is where we return the index.html file suing the function below and
@@ -18,5 +20,10 @@ def index(request):
             email = form.cleaned_data["email"]
             date = form.cleaned_data["date"]
             occupation = form.cleaned_data["occupation"]
-            print(first_name)
+
+            # connects the data to db and stores it in the db when submitted
+            # first_name = first_name db value equalling to variable above
+            Form.objects.create(first_name=first_name, last_name=last_name, email=email,
+                                date=date, occupation=occupation)
+            messages.success(request, "Form submitted successfully!")
     return render(request, "index.html")  # django just renders this page and don't need to specify anything else
