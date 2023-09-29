@@ -3,6 +3,7 @@ from django.shortcuts import render
 from .forms import ApplicationForm
 from .models import Form
 from django.contrib import messages
+from django.core.mail import EmailMessage  # no need for smtp
 
 
 # here is where we return the index.html file suing the function below and
@@ -25,5 +26,11 @@ def index(request):
             # first_name = first_name db value equalling to variable above
             Form.objects.create(first_name=first_name, last_name=last_name, email=email,
                                 date=date, occupation=occupation)
+
+            # sets up subject and message boy for the email to be sent
+            message_body = f"A new job Application was submitted. Thank you, \n{first_name} {last_name}."
+            email_message = EmailMessage("Form submission confirmation", message_body, to=[email])
+            email_message.send()
+
             messages.success(request, "Form submitted successfully!")
     return render(request, "index.html")  # django just renders this page and don't need to specify anything else
