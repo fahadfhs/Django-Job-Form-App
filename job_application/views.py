@@ -34,3 +34,7 @@ def index(request):
 
             messages.success(request, "Form submitted successfully!")
     return render(request, "index.html")  # django just renders this page and don't need to specify anything else
+
+
+def about(request):
+    return render(request, "about.html")
